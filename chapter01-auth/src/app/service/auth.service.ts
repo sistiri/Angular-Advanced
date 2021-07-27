@@ -26,7 +26,7 @@ export class AuthService {
   ) { }
 
   get currentUserValue(): User | null {
-    return this.currentUserSubject.value
+    return this.currentUserSubject.value;
   }
 
   // login(loginData: User): Observable<{ accessToken: string }> {
@@ -49,8 +49,8 @@ export class AuthService {
             this.currentUserSubject.next(null);
           } else {
             // user[0].token = this.lastToken;
-            (user as User[])[0].token = this.lastToken;
-            localStorage.setItem(this.storageName, JSON.stringify(user as User[])[0]);
+            (user as User[][0]).token = this.lastToken;
+            localStorage.setItem(this.storageName, JSON.stringify(user as User[][0]));
             this.currentUserSubject.next((user as User[])[0]);
           }
         })
