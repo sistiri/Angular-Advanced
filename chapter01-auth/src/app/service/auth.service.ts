@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../model/user';
 import { Router } from '@angular/router';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class AuthService {
     private config: ConfigService,
     private http: HttpClient,
     private router: Router,
+    private userService: UserService,
   ) { }
 
   get currentUserValue(): User | null {
