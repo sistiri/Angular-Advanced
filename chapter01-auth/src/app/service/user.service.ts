@@ -19,7 +19,7 @@ export class UserService {
   get(id?: string | number): Observable<User | User[]> {
     let url = `${this.config.apiUrl}${this.entity}`
     if (id) {
-      url += `${id}`
+      url += `/${id}`
     }
 
     return this.http.get<User[]>(url)
