@@ -11,15 +11,30 @@ export class JwtInterceptorService implements HttpInterceptor {
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const currentUser = this.auth.currentUserValue;
+    // User data cannot be accessed without a token.
+    const currentToken = this.auth.lastToken;
+    //const currentUser = this.auth.currentUserValue;
 
-    if (currentUser && currentUser.token) {
+
+    if (currentToken) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${currentUser.token}`
+          Authorization: `Bearer ${currentToken}`
         }
       });
     }
+
+
     return next.handle(request);
   }
+
+  //   if (currentUser && currentUser.token) {
+  //     request = request.clone({
+  //       setHeaders: {
+  //         Authorization: `Bearer ${currentUser.token}`
+  //       }
+  //     });
+  //   }
+  //   return next.handle(request);
+  // }
 }
