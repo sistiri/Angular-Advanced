@@ -27,4 +27,22 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 
+# NGRX
+- `ng add @ngrx/store`
+- `npm i @ngrx/effects`
+
+app.module.ts: 
+```
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+```
+
+app.module.ts - imports[]:
+```
+StoreModule.forRoot({}, {}),
+EffectsModule.forRoot({}),
+```
+
+
+
 
