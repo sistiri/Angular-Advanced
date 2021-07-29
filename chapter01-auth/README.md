@@ -44,5 +44,14 @@ EffectsModule.forRoot({}),
 ```
 
 
+- Create: app/store/UserActions.ts
+- Create: app/store/UserEffects.ts
+- Create app/store/UserReducers.ts
 
+app.module.ts - imports[]:
+
+```
+StoreModule.forRoot({ users: UserReducer }),
+EffectsModule.forRoot([UserEffect]),
+```
 
