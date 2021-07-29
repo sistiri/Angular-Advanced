@@ -1,13 +1,14 @@
 import { User } from 'src/app/model/user';
 import { createReducer, on } from '@ngrx/store';
-import { loadItems, errorItem } from './UserActions';
+import { loadItems, errorItem, loadSelectedItem } from './UserActions';
 
 export interface State {
-  users: { items: User[], error: string };
+  [x: string]: any,
+  users: { items: User[], selected?: User | null, error: string };
 }
 
 export const initialState: State = {
-  users: { items: [], error: '' }
+  users: { items: [], selected: null, error: '' }
 }
 
 export const UserReducer = createReducer(
@@ -16,6 +17,10 @@ export const UserReducer = createReducer(
     ...state,
     items: action.items
   })),
+  on(loadSelectedItem, (state, action) => ({
+    ...state,
+    selected: action.selected
+  })),
   on(errorItem, (state, action) => ({
     ...state,
     error: action.message
@@ -23,4 +28,5 @@ export const UserReducer = createReducer(
 );
 
 export const selectItems = (state: State) => state.users.items;
+export const selectOneItem = (state: State) => Object.assign({}, state.users.selected);
 export const selectError = (state: State) => state.users.error;
