@@ -29,7 +29,7 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(getItems());
-    this.list$ = this.store.pipe(select(selectItems));
+    this.list$ = this.store.pipe( select(selectItems) );
   }
 
   update(user: User): void {

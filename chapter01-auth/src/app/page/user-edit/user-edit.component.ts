@@ -29,8 +29,8 @@ export class UserEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.userID = parseInt(this.ar.snapshot.params.id, 10);
-    this.store.dispatch(getOneItem({ id: this.userID }));
-    this.user$ = this.store.pipe(select(selectOneItem));
+    this.store.dispatch( getOneItem({ id: this.userID }) );
+    this.user$ = this.store.pipe( select(selectOneItem) );
 
 
     // WITHOUT NGRX:
