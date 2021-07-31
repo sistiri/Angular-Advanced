@@ -81,12 +81,12 @@
       "role": 2
     },
     {
-      "id": 11,
       "first_name": "Jorgan",
-      "last_name": "Perrycost",
-      "email": "jperrycosta@whitehouse.gov",
-      "password": "$2a$10$qKO3YDLLxTTJ2C3/y7RCUev/6k3nfcnVrtds5R7VCeH2srRL5WbYG",
-      "role": 3
+      "last_name": "Truman",
+      "email": "jtruman@whitehouse.gov",
+      "password": "$2a$10$aF1bVEa6GQXtCYg.OQz0fOWMQ/Wy8maQeRL5fTDQGuA.NF0RnjLAa",
+      "role": 3,
+      "id": 11
     },
     {
       "id": 12,

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { User } from 'src/app/model/user';
 import { UserService } from 'src/app/service/user.service';
-import { getOneItem } from 'src/app/store/user/UserActions';
+import { getOneItem, updateItem } from 'src/app/store/user/UserActions';
 import { selectOneItem } from 'src/app/store/user/UserReducers';
 
 @Component({
@@ -47,6 +47,11 @@ export class UserEditComponent implements OnInit {
   }
 
   onSubmit(ngForm: NgForm): void {
+
+    const user: User = ({ ...ngForm.value, id: this.userID });
+    this.store.dispatch(updateItem({ item: user }));
+    history.back();
+
 
     // WITHOUT NGRX:
     // const putObject = Object.assign({ id: this.user.id }, ngForm.value);
