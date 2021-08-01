@@ -5,7 +5,7 @@ import { Observable, of } from "rxjs";
 import { catchError, mergeMap, switchMap, tap, withLatestFrom } from "rxjs/operators";
 import { User } from "src/app/model/user";
 import { UserService } from "src/app/service/user.service";
-import { getItems, getOneItem, loadItems, LOAD_ITEMS, LOAD_SELECTED_ITEM, ERROR_ITEM, updateItem, LOAD_UPDATED_ITEM, addItem, LOAD_ADDED_ITEM } from "./UserActions";
+import { getItems, getOneItem, loadItems, LOAD_ITEMS, LOAD_SELECTED_ITEM, ERROR_ITEM, updateItem, LOAD_UPDATED_ITEM, addItem, LOAD_ADDED_ITEM, deleteItem, REMOVE_ITEM } from "./UserActions";
 
 
 @Injectable()
@@ -57,6 +57,17 @@ export class UserEffect {
     );
   });
    
+  deleteItem$ = createEffect( (): Observable<Action> => {
+    let lastAcion: any = null;
+    return this.actions$.pipe(
+ofType(deleteItem),
+      tap( action => lastAcion = action ),
+      switchMap( action => this.userService.delete(action.item) ),
+      switchMap( user => of({ type: REMOVE_ITEM, item: lastAcion.item })),
+      catchError( error => of({ type: ERROR_ITEM, message: error })),
+    );
+  });
+
 
   constructor(
     private actions$: Actions,

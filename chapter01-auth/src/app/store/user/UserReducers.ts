@@ -1,6 +1,6 @@
 import { User } from 'src/app/model/user';
 import { createReducer, on } from '@ngrx/store';
-import { loadItems, errorItem, loadSelectedItem, loadUpdatedItem, loadAddedItem } from './UserActions';
+import { loadItems, errorItem, loadSelectedItem, loadUpdatedItem, loadAddedItem, removeDeletedItem } from './UserActions';
 import { UserService } from 'src/app/service/user.service';
 
 export interface State {
@@ -34,6 +34,10 @@ export const UserReducer = createReducer(
   on(loadAddedItem, (state, action) => ({
     ...state,
     items: (state.items as User[]).concat(action.item)
+  })),
+  on(removeDeletedItem, (state, action) => ({
+    ...state,
+    items: (state.items as User[]).filter( item => item.id !== action.item.id )
   })),
   on(errorItem, (state, action) => ({
     ...state,
