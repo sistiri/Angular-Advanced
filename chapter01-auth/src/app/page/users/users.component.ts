@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { User } from 'src/app/model/user';
 import { ConfigService } from 'src/app/service/config.service';
 import { UserService } from 'src/app/service/user.service';
-import { addItem, deleteItem, getItems } from 'src/app/store/user/UserActions';
-import { selectItems } from 'src/app/store/user/UserReducers';
+import { addItem, deleteItem, errorFlush, getItems } from 'src/app/store/user/UserActions';
+import { selectError, selectItems } from 'src/app/store/user/UserReducers';
 
 @Component({
   selector: 'app-users',
@@ -20,6 +21,14 @@ export class UsersComponent implements OnInit {
   // list$: Observable<User | User[]> | any = this.userService.get(); // Works, but replaced to use NGRX
   list$: Observable<User | User[]> | any = new Observable<User | User[]>();
   cols: any[] = this.config.userColumns;
+  error$ = this.store.pipe(select(selectError)).pipe(
+    tap( error => {
+      const to = setTimeout( () => {
+        clearTimeout(to);
+        this.store.dispatch(errorFlush())
+      }, 3000);
+    })
+  );
 
     constructor(
       private userService: UserService,
@@ -45,7 +54,8 @@ export class UsersComponent implements OnInit {
     const time = today.getHours() + "." + today.getMinutes() + "." + today.getSeconds();
     user.first_name = 'New';
     user.last_name = 'User';
-    user.email = `test.${time}@test.com`;
+    // user.email = `test.${time}@test.com`;
+    user.email = `test@test.com`;
     user.password = 'test';
     user.role = 1,
     this.store.dispatch( addItem({item: user}) );

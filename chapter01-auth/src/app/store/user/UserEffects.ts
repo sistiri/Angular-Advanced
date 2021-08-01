@@ -50,10 +50,11 @@ export class UserEffect {
       ofType(addItem),
       tap(action => lastAction = action),
       // tap( action => console.log('Action', action)), // Only for supervision 
-      switchMap(action => this.userService.create(action.item)),
-      switchMap( () => this.userService.query(`email=${lastAction.item.email}`) ),
-      switchMap( user => of({ type: LOAD_ADDED_ITEM, item: user })),
-      catchError( error => of({ type: ERROR_ITEM, message: error })),
+      mergeMap(action => this.userService.create(action.item).pipe(
+        switchMap(() => this.userService.query(`email=${lastAction.item.email}`)),
+        switchMap( user => of({ type: LOAD_ADDED_ITEM, item: user })),
+        catchError( error => of({ type: ERROR_ITEM, error }))
+      )),
     );
   });
    
@@ -64,7 +65,7 @@ ofType(deleteItem),
       tap( action => lastAcion = action ),
       switchMap( action => this.userService.delete(action.item) ),
       switchMap( user => of({ type: REMOVE_ITEM, item: lastAcion.item })),
-      catchError( error => of({ type: ERROR_ITEM, message: error })),
+      catchError( error => of({ type: ERROR_ITEM, error })),
     );
   });
 

@@ -14,6 +14,7 @@ export const DELETE_ITEM = '[User] delete item';
 export const REMOVE_ITEM = '[User] remove added';
 
 export const ERROR_ITEM = '[User] error item';
+export const ERROR_FLUSH = '[User] error flush';
 
 //Actions.
 export const getItems = createAction(GET_ITEMS);
@@ -60,5 +61,7 @@ export const removeDeletedItem = createAction(
 
 export const errorItem = createAction(
   ERROR_ITEM,
-  props<{ message: string }>()
+  props<{ error: any }>()
 );
+
+export const errorFlush = createAction(ERROR_FLUSH);
