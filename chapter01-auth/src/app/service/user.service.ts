@@ -9,7 +9,7 @@ import { ConfigService } from './config.service';
 })
 export class UserService {
 
-  entity = 'users'
+  entity = 'users';
 
   constructor(
     private http: HttpClient,
@@ -33,5 +33,10 @@ export class UserService {
   update(user: User): Observable<User> {
     const url = `${this.config.apiUrl}${this.entity}/${user.id}`
     return this.http.put<User>(url, user)
+  }
+
+  create(user: User): Observable<User> {
+    const url = `${this.config.apiUrl}${this.entity}`;
+    return this.http.post<User>(url, user);
   }
 }

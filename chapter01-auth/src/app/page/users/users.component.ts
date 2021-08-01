@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { User } from 'src/app/model/user';
 import { ConfigService } from 'src/app/service/config.service';
 import { UserService } from 'src/app/service/user.service';
-import { getItems } from 'src/app/store/user/UserActions';
+import { addItem, getItems } from 'src/app/store/user/UserActions';
 import { selectItems } from 'src/app/store/user/UserReducers';
 
 @Component({
@@ -30,13 +30,24 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(getItems());
     this.list$ = this.store.pipe( select(selectItems) );
-  }
+  };
 
   update(user: User): void {
     this.userService.update(user).toPromise().then(
       userResponse => console.log(userResponse),
       err => console.error(err)
     );
-  }
+  };
 
+  create(): void {
+    const user = new User();
+    const today = new Date();
+    const time = today.getHours() + "." + today.getMinutes() + "." + today.getSeconds();
+    user.first_name = 'New';
+    user.last_name = 'User';
+    user.email = `test.${time}@test.com`;
+    user.password = 'test';
+    user.role = 1,
+    this.store.dispatch( addItem({item: user}) );
+  }
 }
